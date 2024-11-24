@@ -20,7 +20,7 @@ create table ticket (id_ticket int primary key, id_magasin int, idc int, dateVen
 create table detail_ticket( id_ticket int, id_produit int, qte int); 
 
 
-create table stock(id_magasin int, id_produit int,  datestocke date, qte_disponible int);
+create table stock(id_magasin int, id_produit int,  qte_disponible int);
                        
 
 ----------------Staging Area Table---------------------
@@ -285,7 +285,7 @@ Insert into CLIENT (ID_CLIENT,NOM_CLIENT,PRENOM_CLIENT,SEXE,DATENAISSANCE) value
 Insert into CLIENT (ID_CLIENT,NOM_CLIENT,PRENOM_CLIENT,SEXE,DATENAISSANCE) values (200,'xqxhx','BOUCHERA','Femme',to_date('12-04-1990','DD-MM-YYYY'));
 
 
-create sequence ticket_seq
+create sequence ticket_seq;
 /
 declare
  nbpostes number; poste varchar(20); 
@@ -295,19 +295,14 @@ nb_p number; p number; montant number ;prix_vente number;
 jj number;
 
 begin
-date_enreg:=to_date('01-10-2014','DD-MM-YYYY');
 
-FOR j IN 1..300 LOOP
-     jj:=trunc(dbms_random.value(1,12));
-     date_enreg:=(date_enreg+jj);
 FOR j IN 1..6 LOOP
    for i in 1..19 loop
       qte:= trunc(dbms_random.value(1,100));
-      insert into stock values (j,i,date_enreg, qte);
+      insert into stock values (j,i,qte);
    end loop;
 end loop;
 
-end loop;
 
 date_enreg:=to_date('01-10-2014','DD-MM-YYYY');
 

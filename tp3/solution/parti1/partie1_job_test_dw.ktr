@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>sta_creation_p2</name>
+    <name>job_test_dw</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -428,16 +427,16 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2024/11/09 13:44:48.866</created_date>
+    <created_date>2021/11/26 21:03:26.422</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2024/11/09 13:44:48.866</modified_date>
+    <modified_date>2021/11/26 21:03:26.422</modified_date>
     <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>cnx1_exo4_partie2</name>
+    <name>con2_oa</name>
     <server>localhost</server>
     <type>ORACLE</type>
     <access>Native</access>
@@ -493,49 +492,119 @@
   </connection>
   <order>
     <hop>
-      <from>Extraction depuis client</from>
-      <to>Insertion dans sta_client</to>
+      <from>Vider Dim_magasin</from>
+      <to>Extraction depuis sta_magsin</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis detail</from>
-      <to>Insertion dans sta_detail</to>
+      <from>Extraction depuis sta_magsin</from>
+      <to>Insertion dansdim_magsin</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis masin</from>
-      <to>Insertion dans  STA_masin</to>
+      <from>Exécution script SQL</from>
+      <to>Extraction depuis table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis produit</from>
-      <to>Insertion dans STA_Produit</to>
+      <from>Extraction depuis table</from>
+      <to>Insertion dans dim_produit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Vider STA_magasin</from>
-      <to>Extraction depuis masin</to>
+      <from>vider dim_temps</from>
+      <to>Extraction date_vente</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Vider_STA_Produit</from>
-      <to>Extraction depuis produit</to>
+      <from>Extraction date_vente</from>
+      <to>calcule trimestre</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>vider sta_client</from>
-      <to>Extraction depuis client</to>
+      <from>calcule trimestre</from>
+      <to>Dédoublonnage</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>vider sta_detail</from>
-      <to>Extraction depuis detail</to>
+      <from>Dédoublonnage</from>
+      <to>Ajout séquence</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajout séquence</from>
+      <to>Insertion dans dim_temps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>vider vente</from>
+      <to>Extraction depuis sta_detail_ticket</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Extraction depuis sta_detail_ticket</from>
+      <to>calcul trimestre</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insertion dans dim_temps</from>
+      <to>Tri lignes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>calcul trimestre</from>
+      <to>Tri lignes 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes</from>
+      <to>Jointure comparaison lignes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 2</from>
+      <to>Jointure comparaison lignes</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Jointure comparaison lignes</from>
+      <to>Agrégation pour qte_vendue</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insertion dans dim_produit</from>
+      <to>Tri lignes 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Agrégation pour qte_vendue</from>
+      <to>Tri lignes 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 3</from>
+      <to>Jointure comparaison lignes 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 4</from>
+      <to>Jointure comparaison lignes 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Jointure comparaison lignes 2</from>
+      <to> calcul total montant</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from> calcul total montant</from>
+      <to>Insertion dans table</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Extraction depuis client</name>
-    <type>TableInput</type>
+    <name> calcul total montant</name>
+    <type>Calculator</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -544,85 +613,22 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>select id_client, sexe, datenaissance  from client</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ID_CLIENT</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>ID_CLIENT</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>SEXE</name>
-        <length>10</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>SEXE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>DATENAISSANCE</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>DATENAISSANCE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>montantVente</field_name>
+      <calc_type>MULTIPLY</calc_type>
+      <field_a>qte_vendue</field_a>
+      <field_b>PRIX_VENTE</field_b>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -632,14 +638,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>588</yloc>
+      <xloc>976</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Extraction depuis detail</name>
-    <type>TableInput</type>
+    <name>Agrégation pour qte_vendue</name>
+    <type>MemoryGroupBy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -648,514 +654,24 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT d.id_ticket, t.id_magasin, d.id_produit, t.idc, t.dateVente,  d.qte, p.prix_achat, p.prix_vente
-     FROM detail_ticket d, ticket t, produit p
-     WHERE t.id_ticket=d.id_ticket and p.id_produit=d.id_produit</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ID_TICKET</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>ID_TICKET</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ID_MAGASIN</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>ID_MAGASIN</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>id_temps</name>
+      </field>
+      <field>
         <name>ID_PRODUIT</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>ID_PRODUIT</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>IDC</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>IDC</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>DATEVENTE</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>DATEVENTE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>QTE</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>QTE</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_ACHAT</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>PRIX_ACHAT</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_VENTE</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>PRIX_VENTE</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>516</xloc>
-      <yloc>492</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extraction depuis masin</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT  m.id_magasin,  d.ville, d.region
-        FROM magasin m, adresse d 
-          where m.id_adr=d.id_adr </sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
+      </field>
+      <field>
         <name>ID_MAGASIN</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis masin</origin>
-        <comments>ID_MAGASIN</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>VILLE</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis masin</origin>
-        <comments>VILLE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>REGION</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis masin</origin>
-        <comments>REGION</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>516</xloc>
-      <yloc>364</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extraction depuis produit</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT p.id_produit,p.nom_produit, c.categorie, p.prix_vente, p.prix_achat
-       from produit p, categorie c
-                  where  p.id_categorie = c.id_categorie</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ID_PRODUIT</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>ID_PRODUIT</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>NOM_PRODUIT</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>NOM_PRODUIT</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>CATEGORIE</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>CATEGORIE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_VENTE</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>PRIX_VENTE</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_ACHAT</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>PRIX_ACHAT</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>516</xloc>
-      <yloc>268</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans  STA_masin</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
-    <table>STA_MAGASIN</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
+      </field>
+    </group>
     <fields>
       <field>
-        <column_name>ID_MAGASIN</column_name>
-        <stream_name>ID_MAGASIN</stream_name>
-      </field>
-      <field>
-        <column_name>VILLE</column_name>
-        <stream_name>VILLE</stream_name>
-      </field>
-      <field>
-        <column_name>REGION</column_name>
-        <stream_name>REGION</stream_name>
+        <aggregate>qte_vendue</aggregate>
+        <subject>QTE</subject>
+        <type>SUM</type>
+        <valuefield/>
       </field>
     </fields>
     <attributes/>
@@ -1167,13 +683,690 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>364</yloc>
+      <xloc>864</xloc>
+      <yloc>416</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans STA_Produit</name>
+    <name>Ajout séquence</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <valuename>id_temps</valuename>
+    <use_database>N</use_database>
+    <connection>con2_oa</connection>
+    <schema/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>1</start_at>
+    <increment_by>1</increment_by>
+    <max_value>999999999</max_value>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>528</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dédoublonnage</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>ANNEE</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>MOIS</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+      <field>
+        <name>trimestre</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>416</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction date_vente</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <sql>select distinct datevente, to_char(datevente,'mm') as mois,
+                             to_char(datevente,'yyyy') as annee 
+
+
+     from sta_detail_ticket</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>DATEVENTE</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>DATEVENTE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>MOIS</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>MOIS</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ANNEE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>ANNEE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction depuis sta_detail_ticket</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <sql>select id_produit, id_magasin, qte, datevente,  to_char(datevente,'mm') as mois,
+                                              to_char(datevente,'yyyy') as annee
+
+    from sta_detail_ticket</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>ID_PRODUIT</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>ID_PRODUIT</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>ID_MAGASIN</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>ID_MAGASIN</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>QTE</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>QTE</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Timestamp</type>
+        <storagetype>normal</storagetype>
+        <name>DATEVENTE</name>
+        <length>0</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>DATEVENTE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>MOIS</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>MOIS</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ANNEE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table 2</origin>
+        <comments>ANNEE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction depuis sta_magsin</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <sql>select * from sta_magasin</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>ID_MAGASIN</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>ID_MAGASIN</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>NOM_MAGASIN</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>NOM_MAGASIN</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>TEL</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>TEL</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>VILLE</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>VILLE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>REGION</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>REGION</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>16</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction depuis table</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <sql>select * from sta_produit</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>ID_PRODUIT</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>ID_PRODUIT</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>NOM_PRODUIT</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>NOM_PRODUIT</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>CATEGORIE</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>CATEGORIE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>PRIX_VENTE</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>PRIX_VENTE</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Exécution script SQL</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>delete from dim_produit</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>80</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insertion dans dim_produit</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1183,9 +1376,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
-    <table>STA_PRODUIT</table>
+    <connection>con2_oa</connection>
+    <schema>malki</schema>
+    <table>DIM_PRODUIT</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -1217,10 +1410,6 @@
         <column_name>PRIX_VENTE</column_name>
         <stream_name>PRIX_VENTE</stream_name>
       </field>
-      <field>
-        <column_name>PRIX_ACHAT</column_name>
-        <stream_name>PRIX_ACHAT</stream_name>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1231,13 +1420,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>268</yloc>
+      <xloc>496</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans sta_client</name>
+    <name>Insertion dans dim_temps</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1247,9 +1436,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
-    <table>STA_CLIENT</table>
+    <connection>con2_oa</connection>
+    <schema>malki</schema>
+    <table>DIM_TEMPS</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -1266,16 +1455,20 @@
     <return_field/>
     <fields>
       <field>
-        <column_name>ID_CLIENT</column_name>
-        <stream_name>ID_CLIENT</stream_name>
+        <column_name>ID_TEMPS</column_name>
+        <stream_name>id_temps</stream_name>
       </field>
       <field>
-        <column_name>SEXE</column_name>
-        <stream_name>SEXE</stream_name>
+        <column_name>MOIS</column_name>
+        <stream_name>MOIS</stream_name>
       </field>
       <field>
-        <column_name>DATENAISSANCE</column_name>
-        <stream_name>DATENAISSANCE</stream_name>
+        <column_name>TRIMESTRE</column_name>
+        <stream_name>trimestre</stream_name>
+      </field>
+      <field>
+        <column_name>ANNEE</column_name>
+        <stream_name>ANNEE</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -1287,13 +1480,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>588</yloc>
+      <xloc>656</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans sta_detail</name>
+    <name>Insertion dans table</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1303,9 +1496,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>STA_DETAIL_TICKET</table>
+    <connection>con2_oa</connection>
+    <schema>malki</schema>
+    <table>VENTE</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -1322,36 +1515,24 @@
     <return_field/>
     <fields>
       <field>
-        <column_name>ID_TICKET</column_name>
-        <stream_name>ID_TICKET</stream_name>
+        <column_name>ID_PRODUIT</column_name>
+        <stream_name>ID_PRODUIT</stream_name>
       </field>
       <field>
         <column_name>ID_MAGASIN</column_name>
         <stream_name>ID_MAGASIN</stream_name>
       </field>
       <field>
-        <column_name>ID_PRODUIT</column_name>
-        <stream_name>ID_PRODUIT</stream_name>
+        <column_name>ID_TEMPS</column_name>
+        <stream_name>id_temps</stream_name>
       </field>
       <field>
-        <column_name>ID_CLIENT</column_name>
-        <stream_name>IDC</stream_name>
+        <column_name>QTE_VENDUE</column_name>
+        <stream_name>qte_vendue</stream_name>
       </field>
       <field>
-        <column_name>DATEVENTE</column_name>
-        <stream_name>DATEVENTE</stream_name>
-      </field>
-      <field>
-        <column_name>QTE</column_name>
-        <stream_name>QTE</stream_name>
-      </field>
-      <field>
-        <column_name>PRIX_ACHAT</column_name>
-        <stream_name>PRIX_ACHAT</stream_name>
-      </field>
-      <field>
-        <column_name>PRIX_VENTE</column_name>
-        <stream_name>PRIX_VENTE</stream_name>
+        <column_name>MONTANTVENTE</column_name>
+        <stream_name>montantVente</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -1363,13 +1544,349 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>492</yloc>
+      <xloc>1120</xloc>
+      <yloc>544</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Vider STA_magasin</name>
+    <name>Insertion dansdim_magsin</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>con2_oa</connection>
+    <schema>malki</schema>
+    <table>DIM_MAGASIN</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>ID_MAGASIN</column_name>
+        <stream_name>ID_MAGASIN</stream_name>
+      </field>
+      <field>
+        <column_name>NOM_MAGASIN</column_name>
+        <stream_name>NOM_MAGASIN</stream_name>
+      </field>
+      <field>
+        <column_name>TEL</column_name>
+        <stream_name>TEL</stream_name>
+      </field>
+      <field>
+        <column_name>VILLE</column_name>
+        <stream_name>VILLE</stream_name>
+      </field>
+      <field>
+        <column_name>REGION</column_name>
+        <stream_name>REGION</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Jointure comparaison lignes</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Tri lignes</step1>
+    <step2>Tri lignes 2</step2>
+    <keys_1>
+      <key>MOIS</key>
+      <key>ANNEE</key>
+      <key>trimestre</key>
+    </keys_1>
+    <keys_2>
+      <key>MOIS</key>
+      <key>ANNEE</key>
+      <key>trimestre</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>864</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Jointure comparaison lignes 2</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Tri lignes 3</step1>
+    <step2>Tri lignes 4</step2>
+    <keys_1>
+      <key>ID_PRODUIT</key>
+    </keys_1>
+    <keys_2>
+      <key>ID_PRODUIT</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>720</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>MOIS</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>ANNEE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>trimestre</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>752</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes 2</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>MOIS</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>ANNEE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>trimestre</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>976</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes 3</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>ID_PRODUIT</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>544</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes 4</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>ID_PRODUIT</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>864</xloc>
+      <yloc>544</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Vider Dim_magasin</name>
     <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
@@ -1379,12 +1896,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con2_oa</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>delete from sta_magasin</sql>
+    <sql>delete from dim_magasin</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -1401,13 +1918,95 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>364</yloc>
+      <xloc>96</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Vider_STA_Produit</name>
+    <name>calcul trimestre</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>trimestre</field_name>
+      <calc_type>QUARTER_OF_DATE</calc_type>
+      <field_a>DATEVENTE</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>960</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>calcule trimestre</name>
+    <type>Calculator</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <failIfNoFile>Y</failIfNoFile>
+    <calculation>
+      <field_name>trimestre</field_name>
+      <calc_type>QUARTER_OF_DATE</calc_type>
+      <field_a>DATEVENTE</field_a>
+      <field_b/>
+      <field_c/>
+      <value_type>Integer</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>288</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>vider dim_temps</name>
     <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
@@ -1417,12 +2016,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con2_oa</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>delete from sta_produit</sql>
+    <sql>delete from dim_temps</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -1439,13 +2038,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>268</yloc>
+      <xloc>48</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>vider sta_client</name>
+    <name>vider vente</name>
     <type>ExecSQL</type>
     <description/>
     <distribute>Y</distribute>
@@ -1455,12 +2054,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con2_oa</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>delete from sta_client</sql>
+    <sql>delete from vente</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -1477,46 +2076,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>588</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider sta_detail</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from sta_detail_ticket</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>308</xloc>
-      <yloc>492</yloc>
+      <xloc>784</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

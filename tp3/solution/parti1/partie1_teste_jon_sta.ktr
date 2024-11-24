@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>sta_creation_p2</name>
+    <name>teste_jon_sta</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -428,16 +428,16 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2024/11/09 13:44:48.866</created_date>
+    <created_date>2021/11/26 10:50:33.413</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2024/11/09 13:44:48.866</modified_date>
+    <modified_date>2021/11/26 10:50:33.413</modified_date>
     <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>cnx1_exo4_partie2</name>
+    <name>con_oracle</name>
     <server>localhost</server>
     <type>ORACLE</type>
     <access>Native</access>
@@ -493,18 +493,8 @@
   </connection>
   <order>
     <hop>
-      <from>Extraction depuis client</from>
-      <to>Insertion dans sta_client</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Extraction depuis detail</from>
-      <to>Insertion dans sta_detail</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Extraction depuis masin</from>
-      <to>Insertion dans  STA_masin</to>
+      <from>Vider_STA_Produit</from>
+      <to>Extraction depuis produit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -518,13 +508,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Vider_STA_Produit</from>
-      <to>Extraction depuis produit</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>vider sta_client</from>
-      <to>Extraction depuis client</to>
+      <from>Extraction depuis masin</from>
+      <to>Insertion dans  STA_masin</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -532,111 +517,12 @@
       <to>Extraction depuis detail</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Extraction depuis detail</from>
+      <to>Insertion dans sta_detail</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>Extraction depuis client</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>select id_client, sexe, datenaissance  from client</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>ID_CLIENT</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>ID_CLIENT</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>SEXE</name>
-        <length>10</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>SEXE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Timestamp</type>
-        <storagetype>normal</storagetype>
-        <name>DATENAISSANCE</name>
-        <length>0</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis client</origin>
-        <comments>DATENAISSANCE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>516</xloc>
-      <yloc>588</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Extraction depuis detail</name>
     <type>TableInput</type>
@@ -648,10 +534,10 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT d.id_ticket, t.id_magasin, d.id_produit, t.idc, t.dateVente,  d.qte, p.prix_achat, p.prix_vente
-     FROM detail_ticket d, ticket t, produit p
-     WHERE t.id_ticket=d.id_ticket and p.id_produit=d.id_produit</sql>
+    <connection>con_oracle</connection>
+    <sql>SELECT d.id_ticket, t.id_magasin, d.id_produit, t.dateVente,  d.qte 
+     FROM detail_ticket d, ticket t 
+     WHERE t.id_ticket=d.id_ticket</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -665,11 +551,11 @@
         <name>ID_TICKET</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
+        <origin>Extraction depuis table</origin>
         <comments>ID_TICKET</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -679,7 +565,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -688,11 +574,11 @@
         <name>ID_MAGASIN</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
+        <origin>Extraction depuis table</origin>
         <comments>ID_MAGASIN</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -702,7 +588,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -711,11 +597,11 @@
         <name>ID_PRODUIT</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
+        <origin>Extraction depuis table</origin>
         <comments>ID_PRODUIT</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -725,30 +611,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>Integer</type>
-        <storagetype>normal</storagetype>
-        <name>IDC</name>
-        <length>38</length>
-        <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>IDC</comments>
-        <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -757,11 +620,11 @@
         <name>DATEVENTE</name>
         <length>0</length>
         <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
+        <origin>Extraction depuis table</origin>
         <comments>DATEVENTE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -771,7 +634,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -780,11 +643,11 @@
         <name>QTE</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis detail</origin>
+        <origin>Extraction depuis table</origin>
         <comments>QTE</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -794,53 +657,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_ACHAT</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>PRIX_ACHAT</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_VENTE</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis detail</origin>
-        <comments>PRIX_VENTE</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -853,8 +670,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>492</yloc>
+      <xloc>240</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -869,8 +686,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT  m.id_magasin,  d.ville, d.region
+    <connection>con_oracle</connection>
+    <sql>SELECT  m.id_magasin, m.nom_magasin, m.tel, d.ville, d.region
         FROM magasin m, adresse d 
           where m.id_adr=d.id_adr </sql>
     <limit>0</limit>
@@ -886,11 +703,11 @@
         <name>ID_MAGASIN</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis masin</origin>
+        <origin>Extraction depuis table</origin>
         <comments>ID_MAGASIN</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -900,7 +717,53 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>NOM_MAGASIN</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>NOM_MAGASIN</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>Integer</type>
+        <storagetype>normal</storagetype>
+        <name>TEL</name>
+        <length>38</length>
+        <precision>0</precision>
+        <origin>Extraction depuis table</origin>
+        <comments>TEL</comments>
+        <conversion_Mask>####0;-####0</conversion_Mask>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -909,11 +772,11 @@
         <name>VILLE</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Extraction depuis masin</origin>
+        <origin>Extraction depuis table</origin>
         <comments>VILLE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -923,7 +786,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -932,11 +795,11 @@
         <name>REGION</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Extraction depuis masin</origin>
+        <origin>Extraction depuis table</origin>
         <comments>REGION</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -946,7 +809,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -959,8 +822,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>364</yloc>
+      <xloc>304</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -975,8 +838,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <sql>SELECT p.id_produit,p.nom_produit, c.categorie, p.prix_vente, p.prix_achat
+    <connection>con_oracle</connection>
+    <sql>SELECT p.id_produit,p.nom_produit, c.categorie, p.prix_vente   
        from produit p, categorie c
                   where  p.id_categorie = c.id_categorie</sql>
     <limit>0</limit>
@@ -992,11 +855,11 @@
         <name>ID_PRODUIT</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis produit</origin>
+        <origin>Extraction depuis table</origin>
         <comments>ID_PRODUIT</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1006,7 +869,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1015,11 +878,11 @@
         <name>NOM_PRODUIT</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
+        <origin>Extraction depuis table</origin>
         <comments>NOM_PRODUIT</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1029,7 +892,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1038,11 +901,11 @@
         <name>CATEGORIE</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
+        <origin>Extraction depuis table</origin>
         <comments>CATEGORIE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1052,7 +915,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1061,7 +924,7 @@
         <name>PRIX_VENTE</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
+        <origin>Extraction depuis table</origin>
         <comments>PRIX_VENTE</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1075,30 +938,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>BigNumber</type>
-        <storagetype>normal</storagetype>
-        <name>PRIX_ACHAT</name>
-        <length>-1</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis produit</origin>
-        <comments>PRIX_ACHAT</comments>
-        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -1111,8 +951,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>268</yloc>
+      <xloc>304</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1127,8 +967,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
+    <connection>con_oracle</connection>
+    <schema>malki</schema>
     <table>STA_MAGASIN</table>
     <commit>1000</commit>
     <truncate>N</truncate>
@@ -1150,6 +990,14 @@
         <stream_name>ID_MAGASIN</stream_name>
       </field>
       <field>
+        <column_name>NOM_MAGASIN</column_name>
+        <stream_name>NOM_MAGASIN</stream_name>
+      </field>
+      <field>
+        <column_name>TEL</column_name>
+        <stream_name>TEL</stream_name>
+      </field>
+      <field>
         <column_name>VILLE</column_name>
         <stream_name>VILLE</stream_name>
       </field>
@@ -1167,8 +1015,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>364</yloc>
+      <xloc>528</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1183,8 +1031,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
+    <connection>con_oracle</connection>
+    <schema>malki</schema>
     <table>STA_PRODUIT</table>
     <commit>1000</commit>
     <truncate>N</truncate>
@@ -1217,10 +1065,6 @@
         <column_name>PRIX_VENTE</column_name>
         <stream_name>PRIX_VENTE</stream_name>
       </field>
-      <field>
-        <column_name>PRIX_ACHAT</column_name>
-        <stream_name>PRIX_ACHAT</stream_name>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -1231,64 +1075,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>268</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans sta_client</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>hafsa</schema>
-    <table>STA_CLIENT</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>ID_CLIENT</column_name>
-        <stream_name>ID_CLIENT</stream_name>
-      </field>
-      <field>
-        <column_name>SEXE</column_name>
-        <stream_name>SEXE</stream_name>
-      </field>
-      <field>
-        <column_name>DATENAISSANCE</column_name>
-        <stream_name>DATENAISSANCE</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>772</xloc>
-      <yloc>588</yloc>
+      <xloc>528</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1303,8 +1091,8 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <schema>HAFSA</schema>
+    <connection>con_oracle</connection>
+    <schema>malki</schema>
     <table>STA_DETAIL_TICKET</table>
     <commit>1000</commit>
     <truncate>N</truncate>
@@ -1334,24 +1122,12 @@
         <stream_name>ID_PRODUIT</stream_name>
       </field>
       <field>
-        <column_name>ID_CLIENT</column_name>
-        <stream_name>IDC</stream_name>
-      </field>
-      <field>
         <column_name>DATEVENTE</column_name>
         <stream_name>DATEVENTE</stream_name>
       </field>
       <field>
         <column_name>QTE</column_name>
         <stream_name>QTE</stream_name>
-      </field>
-      <field>
-        <column_name>PRIX_ACHAT</column_name>
-        <stream_name>PRIX_ACHAT</stream_name>
-      </field>
-      <field>
-        <column_name>PRIX_VENTE</column_name>
-        <stream_name>PRIX_VENTE</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -1363,8 +1139,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>772</xloc>
-      <yloc>492</yloc>
+      <xloc>432</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1379,7 +1155,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con_oracle</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
@@ -1401,8 +1177,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>364</yloc>
+      <xloc>80</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1417,7 +1193,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con_oracle</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
@@ -1439,46 +1215,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>268</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider sta_client</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from sta_client</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>308</xloc>
-      <yloc>588</yloc>
+      <xloc>96</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1493,7 +1231,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx1_exo4_partie2</connection>
+    <connection>con_oracle</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
@@ -1515,8 +1253,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>308</xloc>
-      <yloc>492</yloc>
+      <xloc>64</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

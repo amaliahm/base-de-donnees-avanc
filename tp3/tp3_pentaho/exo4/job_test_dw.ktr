@@ -440,7 +440,7 @@
     <server>localhost</server>
     <type>ORACLE</type>
     <access>Native</access>
-    <database>xe</database>
+    <database>ORCLCDB</database>
     <port>1522</port>
     <username>ahmed</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93aedb</password>
@@ -495,9 +495,9 @@
     <server>localhost</server>
     <type>ORACLE</type>
     <access>Native</access>
-    <database>xe</database>
+    <database>ORCLCDB</database>
     <port>1522</port>
-    <username>ali</username>
+    <username>ahmed</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93aedb</password>
     <servername/>
     <data_tablespace/>
@@ -513,10 +513,6 @@
       </attribute>
       <attribute>
         <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
         <attribute>N</attribute>
       </attribute>
       <attribute>
@@ -1523,6 +1519,70 @@
     </GUI>
   </step>
   <step>
+    <name>Insertion dans table</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cnx2_tp3_exo4</connection>
+    <schema>AHMED</schema>
+    <table>VENTE</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>ID_TEMPS</column_name>
+        <stream_name>id_temps</stream_name>
+      </field>
+      <field>
+        <column_name>ID_PRODUIT</column_name>
+        <stream_name>ID_PRODUIT</stream_name>
+      </field>
+      <field>
+        <column_name>ID_MAGASIN</column_name>
+        <stream_name>ID_MAGASIN</stream_name>
+      </field>
+      <field>
+        <column_name>QTE_VENDUE</column_name>
+        <stream_name>qte_vendue</stream_name>
+      </field>
+      <field>
+        <column_name>MONTANTVENTE</column_name>
+        <stream_name>montantVente</stream_name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>352</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Merge join</name>
     <type>MergeJoin</type>
     <description/>
@@ -2066,70 +2126,6 @@
     <GUI>
       <xloc>96</xloc>
       <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans table</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_tp3_exo4</connection>
-    <schema>AHMED</schema>
-    <table>VENTE</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>ID_TEMPS</column_name>
-        <stream_name>id_temps</stream_name>
-      </field>
-      <field>
-        <column_name>ID_PRODUIT</column_name>
-        <stream_name>ID_PRODUIT</stream_name>
-      </field>
-      <field>
-        <column_name>ID_MAGASIN</column_name>
-        <stream_name>ID_MAGASIN</stream_name>
-      </field>
-      <field>
-        <column_name>QTE_VENDUE</column_name>
-        <stream_name>qte_vendue</stream_name>
-      </field>
-      <field>
-        <column_name>MONTANTVENTE</column_name>
-        <stream_name>montantVente</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>352</xloc>
-      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

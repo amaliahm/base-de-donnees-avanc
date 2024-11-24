@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>dw_creation_p2</name>
+    <name>v2_partie2_job_test_dw</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -427,22 +428,22 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2024/11/09 13:51:07.789</created_date>
+    <created_date>2021/11/29 22:28:19.674</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2024/11/09 13:51:07.789</modified_date>
-    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2021/11/29 22:28:19.674</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>cnx2_exo4_partie2</name>
+    <name>cc</name>
     <server>localhost</server>
     <type>ORACLE</type>
     <access>Native</access>
-    <database>ORCLCDB</database>
-    <port>1522</port>
-    <username>ahmed</username>
+    <database>xe</database>
+    <port>1521</port>
+    <username>malki2</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93aedb</password>
     <servername/>
     <data_tablespace/>
@@ -462,7 +463,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>1522</attribute>
+        <attribute>1521</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -492,213 +493,178 @@
   </connection>
   <order>
     <hop>
-      <from>vider dim_categorie</from>
-      <to>Extraction depuis table</to>
+      <from>Extraction depuis sta_prduit</from>
+      <to>Insertion dans dim_produit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis table</from>
-      <to>Dédoublonnage</to>
+      <from>vider_dim_produit</from>
+      <to>Extraction depuis sta_prduit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dédoublonnage</from>
+      <from>vider_dimVille</from>
+      <to>Extraction sta_magasin</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Extraction sta_magasin</from>
       <to>Ajout séquence</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Ajout séquence</from>
-      <to>Insertion dans table</to>
+      <to>Insertion dim_ville</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>vider dim_temps</from>
-      <to>Extraction depuis table 2</to>
+      <from>Génération sexe_table</from>
+      <to>Insertion dim_sexe</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis table 2</from>
-      <to>calc semestre</to>
+      <from>Exécution script SQL</from>
+      <to>Génération sexe_table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>calc semestre</from>
-      <to>Altération structure flux</to>
+      <from>vider_dim_temps</from>
+      <to>Extraction datevente</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Altération structure flux</from>
+      <from>Extraction datevente</from>
+      <to>compute semestre</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dédoublonnage</from>
+      <to>Ajout id_temps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajout id_temps</from>
+      <to>Insertion dim_temps</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>compute semestre</from>
       <to>Tri lignes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes</from>
-      <to>Dédoublonnage 2</to>
+      <to>Dédoublonnage</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dédoublonnage 2</from>
-      <to>Ajout séquence 2</to>
+      <from>vider_dim_age</from>
+      <to>Extraction client</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Ajout séquence 2</from>
-      <to>Insertion dans table 2</to>
+      <from>Extraction client</from>
+      <to>Ajout id_age</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>vider dim_ville</from>
-      <to>Extraction depuis table 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Extraction depuis table 3</from>
-      <to>Ajout séquence 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Ajout séquence 3</from>
-      <to>Insertion dans table 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>vider dim_sexe</from>
-      <to>Génération données (grille)</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Génération données (grille)</from>
-      <to>Insertion dans table 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>vider dim_groupeAge</from>
-      <to>Génération données (grille) 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Génération données (grille) 2</from>
-      <to>Insertion dans table 5</to>
+      <from>Ajout id_age</from>
+      <to>Insertion dim_age</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>vider vente</from>
-      <to>Extraction depuis table 4</to>
+      <to>Extraction sta_detail</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Insertion dans table</from>
+      <from>Extraction sta_detail</from>
+      <to>copute semstre</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>copute semstre</from>
       <to>Tri lignes 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Extraction depuis table 4</from>
+      <from>Insertion dim_ville</from>
       <to>Tri lignes 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 3</from>
-      <to>Merge join</to>
+      <to>Jointure comparaison lignes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 2</from>
-      <to>Merge join</to>
+      <to>Jointure comparaison lignes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge join</from>
-      <to>calc semestre 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>calc semestre 2</from>
-      <to>Tri lignes 3 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insertion dans table 2</from>
-      <to>Merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Tri lignes 3 2</from>
-      <to>Merge join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insertion dans table 3</from>
+      <from>Insertion dim_sexe</from>
       <to>Tri lignes 4</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge join 2</from>
+      <from>Jointure comparaison lignes</from>
+      <to>Tri lignes 6</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 4</from>
+      <to>Jointure comparaison lignes 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 6</from>
+      <to>Jointure comparaison lignes 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insertion dim_temps</from>
+      <to>Tri lignes 8</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Jointure comparaison lignes 3</from>
       <to>Tri lignes 5</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 5</from>
-      <to>Merge join 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Tri lignes 4</from>
-      <to>Merge join 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insertion dans table 4</from>
-      <to>Tri lignes 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 3</from>
-      <to>Tri lignes 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Tri lignes 7</from>
-      <to>Merge join 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Tri lignes 6</from>
-      <to>Merge join 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insertion dans table 5</from>
-      <to>Tri lignes 9</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 4</from>
-      <to>calc semestre 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>calc semestre 3</from>
-      <to>Tri lignes 8</to>
+      <to>Jointure comparaison lignes 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 8</from>
-      <to>Merge join 5</to>
+      <to>Jointure comparaison lignes 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insertion dim_age</from>
+      <to>Tri lignes 7</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Jointure comparaison lignes 2</from>
+      <to>Tri lignes 9</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Tri lignes 7</from>
+      <to>Jointure c</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 9</from>
-      <to>Merge join 5</to>
+      <to>Jointure c</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge join 5</from>
+      <from>Jointure c</from>
       <to>Agrégation sans tri</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Extraction depuis sta_prduit</from>
-      <to>Insertion dans dim_produit</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -712,33 +678,23 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Création dopérations de calcul 2</from>
-      <to>Altération structure flux 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>vider_dim_produit</from>
-      <to>Extraction depuis sta_prduit</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge join 6</from>
-      <to>Création dopérations de calcul 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Tri lignes 10</from>
-      <to>Merge join 6</to>
+      <to>Jointure comparaison lignes 4</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Tri lignes 11</from>
-      <to>Merge join 6</to>
+      <to>Jointure comparaison lignes 4</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Altération structure flux 2</from>
-      <to>Insertion dans table 6</to>
+      <from>Jointure comparaison lignes 4</from>
+      <to>Benefice 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Benefice 2</from>
+      <to>Insertion dans  fait vente</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -756,35 +712,32 @@
     <give_back_row>N</give_back_row>
     <group>
       <field>
-        <name>id_sexe</name>
+        <name>id_age</name>
       </field>
       <field>
-        <name>id_temps</name>
+        <name>ID_PRODUIT</name>
       </field>
       <field>
         <name>id_ville</name>
       </field>
       <field>
-        <name>id_categorie</name>
+        <name>id_sexe</name>
       </field>
       <field>
-        <name>id_groupeAge</name>
-      </field>
-      <field>
-        <name>ID_PRODUIT</name>
+        <name>id_temps</name>
       </field>
     </group>
     <fields>
       <field>
-        <aggregate>sum_qte</aggregate>
+        <aggregate>avg_qte</aggregate>
         <subject>QTE</subject>
-        <type>SUM</type>
+        <type>AVERAGE</type>
         <valuefield/>
       </field>
       <field>
-        <aggregate>nbr_vente</aggregate>
-        <subject>ID_TICKET</subject>
-        <type>COUNT_ALL</type>
+        <aggregate>total_qte</aggregate>
+        <subject>QTE</subject>
+        <type>SUM</type>
         <valuefield/>
       </field>
     </fields>
@@ -797,8 +750,78 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
+      <xloc>816</xloc>
+      <yloc>592</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Ajout id_age</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <valuename>id_age</valuename>
+    <use_database>N</use_database>
+    <connection>cc</connection>
+    <schema/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>1</start_at>
+    <increment_by>1</increment_by>
+    <max_value>999999999</max_value>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
       <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Ajout id_temps</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <valuename>id_temps</valuename>
+    <use_database>N</use_database>
+    <connection>cc</connection>
+    <schema/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>1</start_at>
+    <increment_by>1</increment_by>
+    <max_value>999999999</max_value>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -813,79 +836,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <valuename>id_categorie</valuename>
-    <use_database>N</use_database>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Ajout séquence 2</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>id_temps</valuename>
-    <use_database>N</use_database>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Ajout séquence 3</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
     <valuename>id_ville</valuename>
     <use_database>N</use_database>
-    <connection>cnx2_exo4_partie2</connection>
+    <connection>cc</connection>
     <schema/>
     <seqname>SEQ_</seqname>
     <use_counter>Y</use_counter>
@@ -893,37 +846,6 @@
     <start_at>1</start_at>
     <increment_by>1</increment_by>
     <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>384</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Altération structure flux</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>MOIS</name>
-      </remove>
-    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -934,67 +856,15 @@
     </remotesteps>
     <GUI>
       <xloc>368</xloc>
-      <yloc>160</yloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Altération structure flux 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_categorie</name>
-      </field>
-      <field>
-        <name>id_groupeAge</name>
-      </field>
-      <field>
-        <name>id_sexe</name>
-      </field>
-      <field>
-        <name>id_temps</name>
-      </field>
-      <field>
-        <name>id_ville</name>
-      </field>
-      <field>
-        <name>nbr_vente</name>
-      </field>
-      <field>
-        <name>benifice</name>
-      </field>
-      <field>
-        <name>ID_PRODUIT</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1112</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Création dopérations de calcul 2</name>
+    <name>Benefice 2</name>
     <type>Calculator</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1003,24 +873,9 @@
     </partitioning>
     <failIfNoFile>Y</failIfNoFile>
     <calculation>
-      <field_name>montant_vente</field_name>
+      <field_name>montantAchat</field_name>
       <calc_type>MULTIPLY</calc_type>
-      <field_a>sum_qte</field_a>
-      <field_b>PRIX_VENTE</field_b>
-      <field_c/>
-      <value_type>None</value_type>
-      <value_length>-1</value_length>
-      <value_precision>-1</value_precision>
-      <remove>N</remove>
-      <conversion_mask/>
-      <decimal_symbol/>
-      <grouping_symbol/>
-      <currency_symbol/>
-    </calculation>
-    <calculation>
-      <field_name>montant_achat</field_name>
-      <calc_type>MULTIPLY</calc_type>
-      <field_a>sum_qte</field_a>
+      <field_a>total_qte</field_a>
       <field_b>PRIX_ACHAT</field_b>
       <field_c/>
       <value_type>None</value_type>
@@ -1033,10 +888,25 @@
       <currency_symbol/>
     </calculation>
     <calculation>
-      <field_name>benifice</field_name>
+      <field_name>montantVente</field_name>
+      <calc_type>MULTIPLY</calc_type>
+      <field_a>total_qte</field_a>
+      <field_b>PRIX_VENTE</field_b>
+      <field_c/>
+      <value_type>None</value_type>
+      <value_length>-1</value_length>
+      <value_precision>-1</value_precision>
+      <remove>N</remove>
+      <conversion_mask/>
+      <decimal_symbol/>
+      <grouping_symbol/>
+      <currency_symbol/>
+    </calculation>
+    <calculation>
+      <field_name>benefice</field_name>
       <calc_type>SUBTRACT</calc_type>
-      <field_a>montant_vente</field_a>
-      <field_b>montant_achat</field_b>
+      <field_a>montantVente</field_a>
+      <field_b>montantAchat</field_b>
       <field_c/>
       <value_type>None</value_type>
       <value_length>-1</value_length>
@@ -1056,8 +926,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>864</xloc>
-      <yloc>640</yloc>
+      <xloc>848</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1074,42 +944,7 @@
     </partitioning>
     <count_rows>N</count_rows>
     <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>CATEGORIE</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dédoublonnage 2</name>
-    <type>Unique</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <count_rows>N</count_rows>
-    <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
+    <reject_duplicate_row>Y</reject_duplicate_row>
     <error_description/>
     <fields>
       <field>
@@ -1130,8 +965,153 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>144</yloc>
+      <xloc>384</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction client</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <sql>select distinct to_char(d.datevente,'yyyy')- to_char(c.datenaissance,'yyyy') as age
+
+    from sta_detail_ticket d,  sta_client c
+   where  d.id_client=c.id_client</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>BigNumber</type>
+        <storagetype>normal</storagetype>
+        <name>AGE</name>
+        <length>-1</length>
+        <precision>-1</precision>
+        <origin>Extraction client</origin>
+        <comments>AGE</comments>
+        <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
+        <decimal_symbol>.</decimal_symbol>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>176</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Extraction datevente</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <sql>select to_char(datevente,'mm') as mois,   to_char(datevente,'yyyy') as annee 
+
+
+     from sta_detail_ticket </sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>MOIS</name>
+        <length>2</length>
+        <precision>-1</precision>
+        <origin>Extraction datevente</origin>
+        <comments>MOIS</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ANNEE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Extraction datevente</origin>
+        <comments>ANNEE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>160</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1146,7 +1126,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
+    <connection>cc</connection>
     <sql>select * from sta_produit</sql>
     <limit>0</limit>
     <lookup/>
@@ -1164,8 +1144,8 @@
         <origin>Extraction depuis sta_prduit</origin>
         <comments>ID_PRODUIT</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1175,7 +1155,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1187,8 +1167,8 @@
         <origin>Extraction depuis sta_prduit</origin>
         <comments>NOM_PRODUIT</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1198,7 +1178,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1210,8 +1190,8 @@
         <origin>Extraction depuis sta_prduit</origin>
         <comments>CATEGORIE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1221,7 +1201,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1244,7 +1224,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1267,7 +1247,7 @@
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -1280,13 +1260,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>512</yloc>
+      <xloc>208</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Extraction depuis table</name>
+    <name>Extraction sta_detail</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1296,234 +1276,17 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <sql>SELECT categorie FROM sta_produit </sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>CATEGORIE</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table</origin>
-        <comments>CATEGORIE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>240</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extraction depuis table 2</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <sql>SELECT to_char(dateVente, 'yyyy') as annee , to_char(datevente,'mm') as mois
-FROM sta_detail_ticket
-</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>ANNEE</name>
-        <length>4</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 2</origin>
-        <comments>ANNEE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>MOIS</name>
-        <length>2</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 2</origin>
-        <comments>MOIS</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>160</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extraction depuis table 3</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <sql>SELECT ville , region FROM sta_magasin</sql>
-    <limit>0</limit>
-    <lookup/>
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cached_row_meta_active>N</cached_row_meta_active>
-    <row-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>VILLE</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 3</origin>
-        <comments>VILLE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>REGION</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 3</origin>
-        <comments>REGION</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-    </row-meta>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>224</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Extraction depuis table 4</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <sql>SELECT d.id_produit,d.id_ticket, p.categorie,d.qte, to_char(d.dateVente, 'yyyy') as annee , to_char(d.datevente,'mm') as mois, c.sexe, (2024 - to_char(c.datenaissance,'yyyy')) as age, m.ville ,m.region
-from sta_detail_ticket d, sta_client c,sta_magasin m , sta_produit p
-where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produit = d.id_produit
+    <connection>cc</connection>
+    <sql>select d.id_produit, m.ville, m.region, 
+                                           qte, 
+                                          
+                                          datevente,  to_char(datevente,'mm') as mois,
+                                              to_char(datevente,'yyyy') as annee,
+                                            c.sexe,
+                                            to_char(d.datevente,'yyyy')- to_char(c.datenaissance,'yyyy') as age
 
-</sql>
+    from sta_detail_ticket d, sta_magasin m, sta_client c
+   where d.id_magasin=m.id_magasin and d.id_client=c.id_client</sql>
     <limit>0</limit>
     <lookup/>
     <execute_each_row>N</execute_each_row>
@@ -1537,11 +1300,11 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <name>ID_PRODUIT</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis table 4</origin>
+        <origin>Extraction sta_detail</origin>
         <comments>ID_PRODUIT</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1551,20 +1314,20 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
         <type>String</type>
         <storagetype>normal</storagetype>
-        <name>CATEGORIE</name>
+        <name>VILLE</name>
         <length>20</length>
         <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
-        <comments>CATEGORIE</comments>
+        <origin>Extraction sta_detail</origin>
+        <comments>VILLE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1574,7 +1337,30 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>REGION</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction sta_detail</origin>
+        <comments>REGION</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1583,11 +1369,11 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <name>QTE</name>
         <length>38</length>
         <precision>0</precision>
-        <origin>Extraction depuis table 4</origin>
+        <origin>Extraction sta_detail</origin>
         <comments>QTE</comments>
         <conversion_Mask>####0;-####0</conversion_Mask>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1597,20 +1383,20 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
-        <type>String</type>
+        <type>Timestamp</type>
         <storagetype>normal</storagetype>
-        <name>ANNEE</name>
-        <length>4</length>
+        <name>DATEVENTE</name>
+        <length>0</length>
         <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
-        <comments>ANNEE</comments>
+        <origin>Extraction sta_detail</origin>
+        <comments>DATEVENTE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1620,7 +1406,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1629,11 +1415,11 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <name>MOIS</name>
         <length>2</length>
         <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
+        <origin>Extraction sta_detail</origin>
         <comments>MOIS</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1643,7 +1429,30 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>ANNEE</name>
+        <length>4</length>
+        <precision>-1</precision>
+        <origin>Extraction sta_detail</origin>
+        <comments>ANNEE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1652,11 +1461,11 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <name>SEXE</name>
         <length>10</length>
         <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
+        <origin>Extraction sta_detail</origin>
         <comments>SEXE</comments>
         <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
         <currency_symbol/>
         <trim_type>none</trim_type>
         <case_insensitive>N</case_insensitive>
@@ -1666,7 +1475,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
       <value-meta>
@@ -1675,7 +1484,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <name>AGE</name>
         <length>-1</length>
         <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
+        <origin>Extraction sta_detail</origin>
         <comments>AGE</comments>
         <conversion_Mask>######0.0###################;-######0.0###################</conversion_Mask>
         <decimal_symbol>.</decimal_symbol>
@@ -1689,53 +1498,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
         <output_padding>N</output_padding>
         <date_format_lenient>N</date_format_lenient>
         <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>VILLE</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
-        <comments>VILLE</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
-        <lenient_string_to_number>N</lenient_string_to_number>
-      </value-meta>
-      <value-meta>
-        <type>String</type>
-        <storagetype>normal</storagetype>
-        <name>REGION</name>
-        <length>20</length>
-        <precision>-1</precision>
-        <origin>Extraction depuis table 4</origin>
-        <comments>REGION</comments>
-        <conversion_Mask/>
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol>,</grouping_symbol>
-        <currency_symbol/>
-        <trim_type>none</trim_type>
-        <case_insensitive>N</case_insensitive>
-        <collator_disabled>Y</collator_disabled>
-        <collator_strength>0</collator_strength>
-        <sort_descending>N</sort_descending>
-        <output_padding>N</output_padding>
-        <date_format_lenient>N</date_format_lenient>
-        <date_format_locale>fr_FR</date_format_locale>
-        <date_format_timezone>Africa/Lagos</date_format_timezone>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
         <lenient_string_to_number>N</lenient_string_to_number>
       </value-meta>
     </row-meta>
@@ -1748,13 +1511,132 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1328</xloc>
-      <yloc>16</yloc>
+      <xloc>1184</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Génération données (grille)</name>
+    <name>Extraction sta_magasin</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <sql>select distinct ville,  region from sta_magasin</sql>
+    <limit>0</limit>
+    <lookup/>
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cached_row_meta_active>N</cached_row_meta_active>
+    <row-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>VILLE</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction sta_magasin</origin>
+        <comments>VILLE</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+      <value-meta>
+        <type>String</type>
+        <storagetype>normal</storagetype>
+        <name>REGION</name>
+        <length>20</length>
+        <precision>-1</precision>
+        <origin>Extraction sta_magasin</origin>
+        <comments>REGION</comments>
+        <conversion_Mask/>
+        <decimal_symbol>,</decimal_symbol>
+        <grouping_symbol> </grouping_symbol>
+        <currency_symbol/>
+        <trim_type>none</trim_type>
+        <case_insensitive>N</case_insensitive>
+        <collator_disabled>Y</collator_disabled>
+        <collator_strength>0</collator_strength>
+        <sort_descending>N</sort_descending>
+        <output_padding>N</output_padding>
+        <date_format_lenient>N</date_format_lenient>
+        <date_format_locale>fr_FR</date_format_locale>
+        <date_format_timezone>Africa/Luanda</date_format_timezone>
+        <lenient_string_to_number>N</lenient_string_to_number>
+      </value-meta>
+    </row-meta>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>208</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Exécution script SQL</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>delete from dim_sexe</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>48</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Génération sexe_table</name>
     <type>DataGrid</type>
     <description/>
     <distribute>Y</distribute>
@@ -1793,11 +1675,11 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <data>
       <line>
         <item>1</item>
-        <item>Femme</item>
+        <item>Homme</item>
       </line>
       <line>
         <item>2</item>
-        <item>Homme</item>
+        <item>Femme</item>
       </line>
     </data>
     <attributes/>
@@ -1809,14 +1691,14 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>224</xloc>
-      <yloc>336</yloc>
+      <xloc>256</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Génération données (grille) 2</name>
-    <type>DataGrid</type>
+    <name>Insertion dans  fait vente</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1825,46 +1707,53 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <connection>cc</connection>
+    <schema>malki2</schema>
+    <table>VENTE</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
     <fields>
       <field>
-        <name>id_groupeAge</name>
-        <type>Integer</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-        <field_null_if/>
+        <column_name>ID_PRODUIT</column_name>
+        <stream_name>ID_PRODUIT</stream_name>
       </field>
       <field>
-        <name>groupeAge</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-        <field_null_if/>
+        <column_name>id_age</column_name>
+        <stream_name>id_age</stream_name>
+      </field>
+      <field>
+        <column_name>id_ville</column_name>
+        <stream_name>id_ville</stream_name>
+      </field>
+      <field>
+        <column_name>id_sexe</column_name>
+        <stream_name>id_sexe</stream_name>
+      </field>
+      <field>
+        <column_name>id_temps</column_name>
+        <stream_name>id_temps</stream_name>
+      </field>
+      <field>
+        <column_name>AVG_QTE_VENDUE</column_name>
+        <stream_name>avg_qte</stream_name>
+      </field>
+      <field>
+        <column_name>BENEFICE</column_name>
+        <stream_name>benefice</stream_name>
       </field>
     </fields>
-    <data>
-      <line>
-        <item>1</item>
-        <item>Senior</item>
-      </line>
-      <line>
-        <item>2</item>
-        <item>Adult</item>
-      </line>
-      <line>
-        <item>3</item>
-        <item>Child</item>
-      </line>
-    </data>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1874,8 +1763,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>240</xloc>
-      <yloc>416</yloc>
+      <xloc>1056</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1890,8 +1779,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>hafsa</schema>
+    <connection>cc</connection>
+    <schema>malki2</schema>
     <table>DIM_PRODUIT</table>
     <commit>1000</commit>
     <truncate>N</truncate>
@@ -1938,13 +1827,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>512</yloc>
+      <xloc>384</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans table</name>
+    <name>Insertion dim_age</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -1954,9 +1843,9 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>DIM_CATEGORIE</table>
+    <connection>cc</connection>
+    <schema>malki2</schema>
+    <table>DIM_AGE</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -1973,12 +1862,12 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <return_field/>
     <fields>
       <field>
-        <column_name>ID_CATEGORIE</column_name>
-        <stream_name>id_categorie</stream_name>
+        <column_name>AGE</column_name>
+        <stream_name>AGE</stream_name>
       </field>
       <field>
-        <column_name>CATEGORIE</column_name>
-        <stream_name>CATEGORIE</stream_name>
+        <column_name>ID_AGE</column_name>
+        <stream_name>id_age</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -1990,13 +1879,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>672</xloc>
-      <yloc>16</yloc>
+      <xloc>448</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans table 2</name>
+    <name>Insertion dim_sexe</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2006,120 +1895,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>DIM_TEMPS</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>ID_TEMPS</column_name>
-        <stream_name>id_temps</stream_name>
-      </field>
-      <field>
-        <column_name>SEMESTRE</column_name>
-        <stream_name>semestre</stream_name>
-      </field>
-      <field>
-        <column_name>ANNEE</column_name>
-        <stream_name>ANNEE</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans table 3</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>DIM_VILLE</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>ID_VILLE</column_name>
-        <stream_name>id_ville</stream_name>
-      </field>
-      <field>
-        <column_name>VILLE</column_name>
-        <stream_name>VILLE</stream_name>
-      </field>
-      <field>
-        <column_name>REGION</column_name>
-        <stream_name>REGION</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>528</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans table 4</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
+    <connection>cc</connection>
+    <schema>malki2</schema>
     <table>DIM_SEXE</table>
     <commit>1000</commit>
     <truncate>N</truncate>
@@ -2154,13 +1931,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>416</xloc>
-      <yloc>336</yloc>
+      <xloc>448</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insertion dans table 5</name>
+    <name>Insertion dim_temps</name>
     <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2170,9 +1947,9 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>DIM_GROUPEAGE</table>
+    <connection>cc</connection>
+    <schema>malki2</schema>
+    <table>DIM_TEMPS</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -2189,88 +1966,72 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <return_field/>
     <fields>
       <field>
-        <column_name>ID_GROUPEAGE</column_name>
-        <stream_name>id_groupeAge</stream_name>
+        <column_name>ANNEE</column_name>
+        <stream_name>ANNEE</stream_name>
       </field>
       <field>
-        <column_name>GROUPEAGE</column_name>
-        <stream_name>groupeAge</stream_name>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>432</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insertion dans table 6</name>
-    <type>TableOutput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <schema>HAFSA</schema>
-    <table>VENTE</table>
-    <commit>1000</commit>
-    <truncate>N</truncate>
-    <ignore_errors>N</ignore_errors>
-    <use_batch>Y</use_batch>
-    <specify_fields>Y</specify_fields>
-    <partitioning_enabled>N</partitioning_enabled>
-    <partitioning_field/>
-    <partitioning_daily>N</partitioning_daily>
-    <partitioning_monthly>Y</partitioning_monthly>
-    <tablename_in_field>N</tablename_in_field>
-    <tablename_field/>
-    <tablename_in_table>Y</tablename_in_table>
-    <return_keys>N</return_keys>
-    <return_field/>
-    <fields>
-      <field>
-        <column_name>ID_VILLE</column_name>
-        <stream_name>id_ville</stream_name>
+        <column_name>semestre</column_name>
+        <stream_name>semestre</stream_name>
       </field>
       <field>
-        <column_name>ID_CATEGORIE</column_name>
-        <stream_name>id_categorie</stream_name>
-      </field>
-      <field>
-        <column_name>ID_TEMPS</column_name>
+        <column_name>id_temps</column_name>
         <stream_name>id_temps</stream_name>
       </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>544</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insertion dim_ville</name>
+    <type>TableOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <schema>malki2</schema>
+    <table>DIM_VILLE</table>
+    <commit>1000</commit>
+    <truncate>N</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
       <field>
-        <column_name>ID_SEXE</column_name>
-        <stream_name>id_sexe</stream_name>
+        <column_name>VILLE</column_name>
+        <stream_name>VILLE</stream_name>
       </field>
       <field>
-        <column_name>NBR_VENTE</column_name>
-        <stream_name>nbr_vente</stream_name>
+        <column_name>REGION</column_name>
+        <stream_name>REGION</stream_name>
       </field>
       <field>
-        <column_name>BENEFICE</column_name>
-        <stream_name>benifice</stream_name>
-      </field>
-      <field>
-        <column_name>ID_GROUPEAGE</column_name>
-        <stream_name>id_groupeAge</stream_name>
-      </field>
-      <field>
-        <column_name>ID_PRODUIT</column_name>
-        <stream_name>ID_PRODUIT</stream_name>
+        <column_name>id_ville</column_name>
+        <stream_name>id_ville</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -2282,13 +2043,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1312</xloc>
-      <yloc>640</yloc>
+      <xloc>512</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Merge join</name>
+    <name>Jointure c</name>
     <type>MergeJoin</type>
     <description/>
     <distribute>Y</distribute>
@@ -2299,13 +2060,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <schema_name/>
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Tri lignes 3</step1>
-    <step2>Tri lignes 2</step2>
+    <step1>Tri lignes 7</step1>
+    <step2>Tri lignes 9</step2>
     <keys_1>
-      <key>CATEGORIE</key>
+      <key>AGE</key>
     </keys_1>
     <keys_2>
-      <key>CATEGORIE</key>
+      <key>AGE</key>
     </keys_2>
     <attributes/>
     <cluster_schema/>
@@ -2316,13 +2077,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1088</xloc>
-      <yloc>32</yloc>
+      <xloc>704</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Merge join 2</name>
+    <name>Jointure comparaison lignes</name>
     <type>MergeJoin</type>
     <description/>
     <distribute>Y</distribute>
@@ -2332,45 +2093,9 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Insertion dans table 2</step1>
-    <step2>Tri lignes 3 2</step2>
-    <keys_1>
-      <key>ANNEE</key>
-      <key>semestre</key>
-    </keys_1>
-    <keys_2>
-      <key>ANNEE</key>
-      <key>semestre</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>944</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 3</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Tri lignes 5</step1>
-    <step2>Tri lignes 4</step2>
+    <join_type>INNER</join_type>
+    <step1>Tri lignes 2</step1>
+    <step2>Tri lignes 3</step2>
     <keys_1>
       <key>VILLE</key>
       <key>REGION</key>
@@ -2389,80 +2114,12 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     </remotesteps>
     <GUI>
       <xloc>768</xloc>
-      <yloc>272</yloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Merge join 4</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Tri lignes 7</step1>
-    <step2>Tri lignes 6</step2>
-    <keys_1>
-      <key>sexe</key>
-    </keys_1>
-    <keys_2>
-      <key>sexe</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1024</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 5</name>
-    <type>MergeJoin</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Tri lignes 8</step1>
-    <step2>Tri lignes 9</step2>
-    <keys_1>
-      <key>groupeAge</key>
-    </keys_1>
-    <keys_2>
-      <key>groupeAge</key>
-    </keys_2>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1264</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge join 6</name>
+    <name>Jointure comparaison lignes 2</name>
     <type>MergeJoin</type>
     <description/>
     <distribute>Y</distribute>
@@ -2473,8 +2130,78 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <schema_name/>
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Tri lignes 11</step1>
-    <step2>Tri lignes 10</step2>
+    <step1>Tri lignes 5</step1>
+    <step2>Tri lignes 8</step2>
+    <keys_1>
+      <key>ANNEE</key>
+      <key>semestre</key>
+    </keys_1>
+    <keys_2>
+      <key>ANNEE</key>
+      <key>semestre</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>752</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Jointure comparaison lignes 3</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Tri lignes 6</step1>
+    <step2>Tri lignes 4</step2>
+    <keys_1>
+      <key>SEXE</key>
+    </keys_1>
+    <keys_2>
+      <key>sexe</key>
+    </keys_2>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>752</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Jointure comparaison lignes 4</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Tri lignes 10</step1>
+    <step2>Tri lignes 11</step2>
     <keys_1>
       <key>ID_PRODUIT</key>
     </keys_1>
@@ -2490,8 +2217,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>864</xloc>
-      <yloc>528</yloc>
+      <xloc>640</xloc>
+      <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2540,8 +2267,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>96</yloc>
+      <xloc>304</xloc>
+      <yloc>368</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2582,8 +2309,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>512</yloc>
+      <xloc>512</xloc>
+      <yloc>608</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2624,8 +2351,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>528</yloc>
+      <xloc>720</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2649,7 +2376,15 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>CATEGORIE</name>
+        <name>VILLE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>REGION</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -2666,8 +2401,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>16</yloc>
+      <xloc>880</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2691,7 +2426,15 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>CATEGORIE</name>
+        <name>VILLE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>REGION</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -2708,13 +2451,55 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1200</xloc>
-      <yloc>16</yloc>
+      <xloc>640</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Tri lignes 3 2</name>
+    <name>Tri lignes 4</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>sexe</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes 5</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -2758,155 +2543,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1088</xloc>
-      <yloc>192</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Tri lignes 4</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>VILLE</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>REGION</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>656</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Tri lignes 5</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>VILLE</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>REGION</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>848</xloc>
-      <yloc>192</yloc>
+      <xloc>864</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>Tri lignes 6</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>sexe</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>880</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Tri lignes 7</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -2942,8 +2585,50 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>272</yloc>
+      <xloc>832</xloc>
+      <yloc>192</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Tri lignes 7</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>AGE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>576</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2967,7 +2652,15 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>groupeAge</name>
+        <name>ANNEE</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>semestre</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -2984,8 +2677,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1264</xloc>
-      <yloc>304</yloc>
+      <xloc>656</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3009,7 +2702,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>groupeAge</name>
+        <name>AGE</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -3026,13 +2719,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>880</xloc>
-      <yloc>416</yloc>
+      <xloc>832</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>calc semestre</name>
+    <name>compute semestre</name>
     <type>NumberRange</type>
     <description/>
     <distribute>Y</distribute>
@@ -3066,13 +2759,13 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>96</yloc>
+      <xloc>240</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>calc semestre 2</name>
+    <name>copute semstre</name>
     <type>NumberRange</type>
     <description/>
     <distribute>Y</distribute>
@@ -3106,243 +2799,8 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1088</xloc>
-      <yloc>112</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>calc semestre 3</name>
-    <type>NumberRange</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <inputField>AGE</inputField>
-    <outputField>groupeAge</outputField>
-    <fallBackValue>unknown</fallBackValue>
-    <rules>
-      <rule>
-        <lower_bound>-1.7976931348623157E308</lower_bound>
-        <upper_bound>18.0</upper_bound>
-        <value>Child</value>
-      </rule>
-      <rule>
-        <lower_bound>18.0</lower_bound>
-        <upper_bound>65.0</upper_bound>
-        <value>Adult</value>
-      </rule>
-      <rule>
-        <lower_bound>65.0</lower_bound>
-        <upper_bound>1.7976931348623157E308</upper_bound>
-        <value>Senior</value>
-      </rule>
-    </rules>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1152</xloc>
-      <yloc>304</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider dim_categorie</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from dim_categorie;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>64</xloc>
-      <yloc>16</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider dim_groupeAge</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from dim_groupeage;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>64</xloc>
-      <yloc>416</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider dim_sexe</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from dim_sexe;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>64</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider dim_temps</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from dim_temps;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>64</xloc>
-      <yloc>96</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>vider dim_ville</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
-    <execute_each_row>N</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>N</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>delete from dim_ville;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-    </arguments>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>64</xloc>
-      <yloc>240</yloc>
+      <xloc>1008</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3357,12 +2815,12 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
+    <connection>cc</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>delete from vente;</sql>
+    <sql>delete from vente</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -3379,8 +2837,84 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1456</xloc>
-      <yloc>16</yloc>
+      <xloc>1360</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>vider_dimVille</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>delete from dim_ville</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>48</xloc>
+      <yloc>80</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>vider_dim_age</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>delete from dim_age</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>64</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3395,7 +2929,7 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>cnx2_exo4_partie2</connection>
+    <connection>cc</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
@@ -3418,7 +2952,45 @@ where  d.id_client = c.id_client and m.id_magasin = d.id_magasin and p.id_produi
     </remotesteps>
     <GUI>
       <xloc>64</xloc>
-      <yloc>512</yloc>
+      <yloc>624</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>vider_dim_temps</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>cc</connection>
+    <execute_each_row>N</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>N</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>delete from dim_temps</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+    </arguments>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>48</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -3,8 +3,10 @@ drop table ticket; drop table produit; drop table stock; drop table detail_ticke
 drop table categorie;  drop sequence ticket_seq;
 
 drop table sta_magasin; drop table sta_produit ; drop table sta_detail_ticket;
+drop table sta_client; 
 
-drop table dim_produit; drop table dim_magasin ;drop table dim_temps ;  drop table vente ;
+drop table dim_age; drop table dim_sexe; 
+drop table dim_produit; drop table dim_ville ;drop table dim_temps;  drop table vente ;
 
 ---------OLTP TABLES----------------------------
 create table magasin( id_magasin int primary key, nom_magasin varchar(20), tel int, id_adr int);
@@ -20,27 +22,34 @@ create table ticket (id_ticket int primary key, id_magasin int, idc int, dateVen
 create table detail_ticket( id_ticket int, id_produit int, qte int); 
 
 
-create table stock(id_magasin int, id_produit int,  datestocke date, qte_disponible int);
+create table stock(id_magasin int, id_produit int,  qte_disponible int);
                        
 
 ----------------Staging Area Table---------------------
 
-create table sta_magasin(  id_magasin int primary key, nom_magasin varchar(20), tel int,
-                               ville varchar(20), region varchar(20));
-create table sta_produit (id_produit int primary key, nom_produit varchar(20),  categorie varchar(20),prix_vente float);
+create table sta_magasin(  id_magasin int primary key,  ville varchar(20), region varchar(20));
+create table sta_produit (id_produit int primary key, nom_produit varchar(20),  categorie varchar(20),
+	                            Prix_achat float, prix_vente float);
 
-create table sta_detail_ticket( id_ticket int, id_magasin int, id_produit int, dateVente date, qte int); 
+create table sta_detail_ticket( id_ticket int, id_magasin int, id_produit int, ID_CLIENT int, 
+	                                        dateVente date, qte int,prix_achat float, prix_vente float); 
+
+create table sta_client (id_client int primary key,  sexe varchar(10), datenaissance date);
+
 
 ---------OLAP TABLES----------------------------
 
 
-create table dim_produit (id_produit int primary key, nom_produit varchar(20),  categorie varchar(20), prix_vente float);
-create table dim_magasin( id_magasin int primary key, nom_magasin varchar(20), tel int, ville varchar(20), region varchar(20));
-create table dim_temps (id_temps int primary key, mois int ,trimestre int, annee int);
+create table dim_produit (id_produit int primary key, nom_produit varchar(20),  categorie varchar(20),
+	                     Prix_achat float,  prix_vente float);
+create table dim_ville( id_ville int primary key,  ville varchar(20), region varchar(20));
+create table dim_temps (id_temps int primary key, semestre int, annee int);
+create table dim_sexe(id_sexe int, sexe varchar(10));
+create table dim_age(id_age int, age int);
 
-create table vente (id_produit int, id_magasin int ,id_temps int, qte_vendue int, montantVente int,
-                    primary key(id_produit, id_magasin  ,id_temps));
-
+create table vente (id_produit int, id_ville int ,id_temps int, id_sexe int, id_age int,
+	                                           avg_qte_vendue int, benefice float,
+                    primary key(id_produit, id_ville  ,id_temps, id_sexe, id_age));
 
 
 
@@ -285,38 +294,31 @@ Insert into CLIENT (ID_CLIENT,NOM_CLIENT,PRENOM_CLIENT,SEXE,DATENAISSANCE) value
 Insert into CLIENT (ID_CLIENT,NOM_CLIENT,PRENOM_CLIENT,SEXE,DATENAISSANCE) values (200,'xqxhx','BOUCHERA','Femme',to_date('12-04-1990','DD-MM-YYYY'));
 
 
-create sequence ticket_seq
+create sequence ticket_seq;
 /
 declare
  nbpostes number; poste varchar(20); 
 date_enreg date;  j number; i number;  k number;
 nb_ticket number; m number; c number;  id_ticket number; qte number;
 nb_p number; p number; montant number ;prix_vente number;
-jj number;
 
 begin
-date_enreg:=to_date('01-10-2014','DD-MM-YYYY');
 
-FOR j IN 1..300 LOOP
-     jj:=trunc(dbms_random.value(1,12));
-     date_enreg:=(date_enreg+jj);
 FOR j IN 1..6 LOOP
    for i in 1..19 loop
       qte:= trunc(dbms_random.value(1,100));
-      insert into stock values (j,i,date_enreg, qte);
+      insert into stock values (j,i,qte);
    end loop;
 end loop;
 
-end loop;
 
-date_enreg:=to_date('01-10-2014','DD-MM-YYYY');
+date_enreg:=to_date('01-01-2010','DD-MM-YYYY');
 
 --select sysdate into date_enreg from dual;
 
-  FOR j IN 1..300 LOOP
-     jj:=trunc(dbms_random.value(1,12));
-     date_enreg:=(date_enreg+jj);
-     nb_ticket:= trunc(dbms_random.value(1,8));
+  FOR j IN 1..200 LOOP
+     date_enreg:=(date_enreg+1);
+     nb_ticket:= trunc(dbms_random.value(1,20));
      
      for i IN 1.. nb_ticket LOOP
         m:=trunc(dbms_random.value(1,7));
@@ -324,13 +326,13 @@ date_enreg:=to_date('01-10-2014','DD-MM-YYYY');
         id_ticket:=ticket_seq.nextval;
         
         
-        nb_p:= trunc(dbms_random.value(1,5));
+        nb_p:= trunc(dbms_random.value(1,8));
         montant:=0;
 
         for k IN 1.. nb_p LOOP
           
              p:= trunc(dbms_random.value(1,20));
-             qte:= trunc(dbms_random.value(1,5));
+             qte:= trunc(dbms_random.value(1,4));
              insert into detail_ticket values(id_ticket, p, qte);
 
               select prix_vente into prix_vente from produit  where id_produit=p;
