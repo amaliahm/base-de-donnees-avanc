@@ -284,6 +284,44 @@ Select * from amina.produit where type = 'g';
 SELECT /*+ rule */ count(*) FROM amina.produit WHERE type = 'g';
 Select count(*) from amina.produit where type = 'g';
 
+-- d
+-- make sure the index exists
+/*
+SELECT index_name, visibility FROM all_indexes WHERE table_name = 'PRODUIT' AND index_name = 'IDX_TYPE';
+*/
+
+-- g
+
+-- Select count(*) from amina.produit p, amina.commande c where nom like 'produit100%' and p.idp=c.idp ;
+
+-- Select count(*) from amina.produit p, amina.commande c where qte=1 and p.idp=c.idp ;
+
+
+/*
+create indexes:
+     
+CREATE INDEX idx_produit_idp ON amina.produit(idp);
+CREATE INDEX idx_commande_idp ON amina.commande(idp);
+CREATE INDEX idx_nom ON amina.produit(nom);
+CREATE INDEX idx_qte ON amina.commande(qte);
+
+use join:
+
+SELECT count(*) FROM amina.produit p JOIN amina.commande c ON p.idp = c.idp WHERE nom LIKE 'produit100%';
+
+use hash join:
+*/
+``` 
+SELECT /*+ USE_HASH(p c) */ count(*) FROM amina.produit p JOIN amina.commande c ON p.idp = c.idp WHERE nom LIKE 'produit100%';
+```
+
+/*
+filter before joining:
+
+SELECT count(*) FROM (
+  SELECT idp FROM amina.produit WHERE nom LIKE 'produit100%'
+) p JOIN amina.commande c ON p.idp = c.idp;
+*/
 
 
 
