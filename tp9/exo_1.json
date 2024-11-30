@@ -1,0 +1,31 @@
+// database
+{
+    papier: {
+        "_id" : "papier_1",
+        "titre" :  "titre",
+        "annee" : "****",
+    },
+    reference: {
+        "_id": "",
+        "papier": "papier_1",
+        "reference": "papier_2",
+    },
+    auteur: {
+        "_id": "auteur_1",
+        "nom": "nom",
+        "prenom": "prenom",
+        "affiliation": "affiliation_1",
+    },
+    affiliation: {
+        "_id": "affiliation_1",
+        "nom_etablissement": "nom_etablissement",
+        "ville": "ville",
+        "pays": "pays",
+    },
+    relation_ecrit: {
+        "_id": "relation_1",
+        "auteur": "auteur_1",
+        "papier": "papier_1",
+        "ordre": "1",
+    },   
+}
