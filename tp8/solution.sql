@@ -311,6 +311,7 @@ SELECT count(*) FROM amina.produit p JOIN amina.commande c ON p.idp = c.idp WHER
 
 use hash join:
 */
+
 ``` 
 SELECT /*+ USE_HASH(p c) */ count(*) FROM amina.produit p JOIN amina.commande c ON p.idp = c.idp WHERE nom LIKE 'produit100%';
 ```
