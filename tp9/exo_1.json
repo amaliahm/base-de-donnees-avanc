@@ -3,7 +3,7 @@
     papier: {
         "_id" : "papier_1",
         "titre" :  "titre",
-        "annee" : "****",
+        "annee" : "...."
     },
     reference: {
         "_id": "",
@@ -29,3 +29,161 @@
         "ordre": "1",
     },   
 }
+
+
+// 1
+// un modèle orienté documents normalisé --> chaque entite est stockee separement
+
+//papier
+{
+  "_id": "papier_1",
+  "titre": "titre du papier",
+  "annee": "....",
+  "references": ["papier_2", "papier_3"],
+  "auteurs": [
+    {
+      "ordre": 1,
+      "auteur_id": "auteur_1"
+    },
+    {
+      "ordre": 2,
+      "auteur_id": "auteur_2"
+    }
+  ]
+}
+
+//auteur
+{
+  "_id": "auteur_1",
+  "nom": "nom",
+  "prenom": "prenom",
+  "affiliation": "affiliation_1"
+}
+
+//affiliation
+{
+  "_id": "affiliation_1",
+  "nom_etablissement": "nom d'etablissement",
+  "ville": "ville",
+  "pays": "pays"
+}
+
+
+
+
+// 2
+// modèle orienté documents purement dénormalisé en favorisant les papiers. 
+
+{
+  "_id": "papier_1",
+  "titre": "titre",
+  "annee": "....",
+  "references": [
+    {
+      "titre": "titre",
+      "annee": "...."
+    },
+    {
+      "titre": "titre",
+      "annee": "...."
+    }
+  ],
+  "auteurs": [
+    {
+      "nom": "nom",
+      "prenom": "prenom",
+      "affiliation": {
+        "nom_etablissement": "nom d'etablissement",
+        "ville": "ville",
+        "pays": "pays"
+      }
+    },
+    {
+      "nom": "nom",
+      "prenom": "prenom",
+      "affiliation": {
+        "nom_etablissement": "nom d'etablissement",
+        "ville": "ville",
+        "pays": "pays"
+      }
+    }
+  ]
+}
+
+
+// le principal défaut de cette solution --> duplication de donnees
+
+//est-il toujours possible d'avoir une solution ne reposant que sur l’imbrication! --> non, l'imbrication est ideale pour des cas simples ou les donnees sont fortement liee entre elles, ms dans le cas complexe, mise a jour est difficile
+
+// 3
+// un modèle orienté documents basé sur les références.
+
+{
+  "_id": "papier_1",
+  "titre": "titre",
+  "annee": "....",
+  "references": [
+    {
+      "_id": "papier_2",
+      "titre": "titre",
+      "annee": "...."
+    },
+    {
+      "_id": "papier_3",
+      "titre": "titre",
+      "annee": "...."
+    }
+  ],
+  "auteurs": [
+    {
+      "ordre": 1,
+      "auteur_id": "auteur_1"
+    },
+    {
+      "ordre": 2,
+      "auteur_id": "auteur_2"
+    }
+  ]
+}
+
+
+// 4
+// une solution adaptée à ce problème mobilisant référence et imbrication 
+
+{
+  "_id": "auteur_1",
+  "nom": "nom",
+  "prenom": "prenom",
+  "affiliation": "affiliation_1",
+  "papiers": [
+    {
+      "_id": "papier_1",
+      "titre": "titre",
+      "annee": "...."
+    },
+    {
+      "_id": "papier_2",
+      "titre": "titre",
+      "annee": "...."
+    }
+  ]
+}
+
+{
+  "_id": "papier_1",
+  "titre": "titre",
+  "annee": "....",
+  "auteurs": [
+    {
+      "nom": "nom",
+      "prenom": "prenom"
+    }
+  ],
+  "references": [
+    {
+      "_id": "papier_2",
+      "titre": "titre"
+    }
+  ]
+}
+
