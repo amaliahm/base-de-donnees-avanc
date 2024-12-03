@@ -111,9 +111,11 @@
 }
 
 
-// le principal défaut de cette solution --> duplication de donnees
+// le principal défaut de cette solution --> duplication de donnees 
+--> redandance
 
 //est-il toujours possible d'avoir une solution ne reposant que sur l’imbrication! --> non, l'imbrication est ideale pour des cas simples ou les donnees sont fortement liee entre elles, ms dans le cas complexe, mise a jour est difficile
+--> redandance, probleme de recurrsive, solution est reference
 
 // 3
 // un modèle orienté documents basé sur les références.
