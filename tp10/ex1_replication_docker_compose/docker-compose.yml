@@ -6,7 +6,7 @@ services:
         volumes:
           - ./mongodata1:/data/db
         ports:
-         - 27017:27017
+         - 27016:27017
         entrypoint: [ "/usr/bin/mongod", "--replSet", "rsmongo", "--bind_ip_all"]
       
     mongodb2:
