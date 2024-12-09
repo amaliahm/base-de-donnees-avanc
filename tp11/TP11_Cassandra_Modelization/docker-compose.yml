@@ -1,0 +1,11 @@
+version: '3'
+services:
+  cass:
+      image: datastax/dse-server:6.9.4-ubi
+      container_name: cass-dse
+      ports:
+        - "9042:9042"
+      environment:
+            - DS_LICENSE=accept
+            - MAX_HEAP_SIZE=1000000000
+     
