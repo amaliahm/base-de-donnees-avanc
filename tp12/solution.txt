@@ -1,0 +1,70 @@
+//questions before
+MATCH (n) RETURN n
+MATCH (start)-[r]->(end) RETURN distinct type(r), labels(start) as startNode, labels(end) as endtNode
+CALL db.schema.visualization YIELD nodes, relationships
+
+//8
+a. Récupérer le nœud de la personne Lana Wachowski (Trois solutions)
+
+// 1
+MATCH (n)
+WHERE n.name = 'Lana Wachowski'
+RETURN n
+
+//2
+MATCH (n:Person)
+WHERE n.name = 'Lana Wachowski'
+RETURN n;
+
+//3
+MATCH (n)
+WHERE toLower(n.name) CONTAINS 'lana wachowski'
+RETURN n
+
+
+b. Afficher le nom et le rôle des personnes qui sont nées après 1960 et qui ont jouées en tant qu’acteur dans des films sorties dans les années 80.
+
+MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.born > 1960 AND m.released >= 1980 AND m.released < 1990
+RETURN p.name AS actorName, r.roles AS role;
+
+
+c. Ajouter le label `Actor` aux personnes qui ont jouées en tant qu’acteur dans au moins un film.
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie)
+SET p:Actor
+
+
+d. Afficher les noms des acteurs avec le nombre de films pour chacun. Trier les résultats par nombre de films dans l’ordre décroissant.
+
+MATCH (p:Actor)-[:ACTED_IN]->(m:Movie)
+RETURN p.name AS actorName, COUNT(m) AS numberOfMovies
+ORDER BY numberOfMovies DESC
+
+
+e. Les personnes qui sont des acteurs et des réalisateurs dans le même film.
+
+MATCH (p:Person)-[:ACTED_IN]->(m:Movie),
+      (p)-[:DIRECTED]->(m)
+RETURN p.name AS personName, m.title AS movieTitle
+
+
+f. Le rating moyen de chaque film. Trier les résultats dans l’ordre décroissant.
+
+MATCH (p:Person)-[r:REVIEWED]->(m:Movie)
+RETURN m.title AS movieTitle, AVG(r.rating) AS averageRating
+ORDER BY averageRating DESC
+
+
+g. Les acteurs qui sont joués ensemble dans au moins un film.
+
+// exactly two actors
+MATCH (a:Actor)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(b:Actor)
+WHERE a <> b
+RETURN a.name AS actor1, b.name AS actor2, m.title AS movieTitle
+
+// 2 actors or more
+MATCH (a:Actor)-[:ACTED_IN]->(m:Movie)<-[:ACTED_IN]-(b:Actor)
+WITH m, COLLECT(DISTINCT a.name) AS actors
+WHERE SIZE(actors) > 1
+RETURN actors, m.title AS movieTitle
